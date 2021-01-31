@@ -1,25 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import db from '../db.json';
-import {useRouter} from 'next/router';
 // eslint-disable-next-line import/no-named-as-default
 import Widget from '../src/components/Widget';
+import QuizLogo from '../src/components/QuizLogo';
 import QuizBackground from '../src/components/QuizBackground';
+import QuizContainer from '../src/components/QuizContainer';
 import Footer from '../src/components/Footer';
 import GitHubCorner from '../src/components/GitHubCorner';
-
-// CRIANDO MEUS COMPONENTES
-export const QuizContainer = styled.div`
-  width: 100%;
-  max-width: 350px;
-  padding-top: 45px;
-  margin: auto 10%;
-  @media screen and (max-width: 500px) {
-    margin: auto;
-    padding: 15px;
-  }
-`;
+import Input from '../src/components/Input';
+import Button from '../src/components/Button';
 
 export default function Home() {
   const router = useRouter();
@@ -31,28 +23,27 @@ export default function Home() {
         <title>React & Next js - Projecto Base</title>
       </Head>
       <QuizContainer>
-
+        <QuizLogo />
         <Widget>
           <Widget.Header>
             <h1>Guardiões da Galáxia</h1>
           </Widget.Header>
           <Widget.Content>
-            <form onSubmit={function (infoDoEvento) {
+            <form onSubmit={(infoDoEvento) => {
               infoDoEvento.preventDefault();
               router.push(`/quiz?name=${name}`);
               console.log('Submetendo');
             }}
             >
-           <input 
-           onChange={function (infoDoEvento) {
-             console.log(infoDoEvento.target.value);
-            // name = infoDoEvento.target.value;
-            setName(infoDoEvento.target.value);
-           }}
-           placeholder="Diz aí seu nome" />
-            <button type="submit" disabled={name.length === 0}> 
-              Jogar {name}
-            </button>
+              <Input
+                name="nomeDoUsuario"
+                onChange={(infoDoEvento) => { setName(infoDoEvento.target.value); }}
+                placeholder="Diz aí seu nome"
+                value={name}
+              />
+              <Button type="submit" disabled={name.length === 0}>
+                {`Jogar ${name}`}
+              </Button>
             </form>
           </Widget.Content>
         </Widget>
